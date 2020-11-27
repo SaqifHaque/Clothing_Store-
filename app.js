@@ -4,24 +4,24 @@ const bodyParser = require('body-parser');
 const exSession = require('express-session');
 const cookieParser = require('cookie-parser');
 const login = require('./controllers/login');
-// const home = require('./controller/home');
+const registration = require('./controllers/registration');
 const logout = require('./controllers/logout');
-// const user = require('./controller/user');
+const userdash = require('./controllers/userdash');
 const app = express();
 
 //config
 app.set('view engine', 'ejs');
 
 //middleware
-// app.use('/abc', express.static('assets'));
+app.use('/assets', express.static('assets'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(exSession({ secret: 'my secret value', saveUninitialized: true, resave: false }));
 app.use(cookieParser());
 
 app.use('/login', login);
-// app.use('/home', home);
+app.use('/registration', registration);
 app.use('/logout', logout);
-// app.use('/user', user);
+app.use('/userdash', userdash);
 
 //route
 app.get('/', (req, res) => {
@@ -30,5 +30,5 @@ app.get('/', (req, res) => {
 
 //server startup
 app.listen(2025, (error) => {
-    console.log('express server started at 2020...');
+    console.log('express server started at 2025...');
 });

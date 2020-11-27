@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Better Call Doc</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="assets/Home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="assets/Home/css/heroic-features.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../assets/Index/js/toastr.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    </nav>
+    <!-- Page Content -->
+    <div>
+        <div class="sliderAx h-auto">
+            <div id="slider-1" class="container mx-auto">
+                <div class="bg-cover bg-center  h-auto text-white py-24 px-10 object-fill" style="background-image: url(https://www.paymill.com/wp-content/uploads/2018/03/How-to-Keep-Your-E-Commerce-System-Funtioning-at-Optimum-Capacity.png)">
+                    <div class="md:w-1/2">
+                        <p class="font-bold text-sm uppercase">Clothing Store</p>
+                        <p class="text-3xl font-bold">Hello Folks</p>
+                        <p class="text-2xl mb-10 leading-none">Get Your Favorite products now!!</p>
+                        <a href="http://localhost:2020/userdash/contact" class="bg-purple-800 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">Contact us</a>
+                    </div>
+                </div>
+                <!-- container -->
+                <br>
+            </div>
+
+            <div id="slider-2" class="container mx-auto">
+                <div class="bg-cover bg-top  h-auto text-white py-24 px-10 object-fill" style="background-image: url(https://admin.trellis.co/wp-content/uploads/Blog-Post-Banners-3-1.png)">
+
+                    <p class="font-bold text-sm uppercase">Welcome to</p>
+                    <p class="text-3xl font-bold">Clothing Store</p>
+                    <p class="text-2xl mb-10 leading-none">Get Your Favorite products now!!</p>
+                    <a href="#" class="bg-purple-800 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">Contact us</a>
+
+                </div>
+                <!-- container -->
+                <br>
+            </div>
+        </div>
+        <div class="flex justify-between w-12 mx-auto pb-2">
+            <button id="sButton1" onclick="sliderButton1()" class="bg-purple-400 rounded-full w-4 pb-2 "></button>
+            <button id="sButton2" onclick="sliderButton2() " class="bg-purple-400 rounded-full w-4 p-2"></button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="text-4xl sm:text-5xl text-center my-10">Our Products</div>
+
+        <div id="doctor" class="grid md:grid-cols-3 gap-8 m-5 max-w-5xl m-auto">
+            <% for(const sub of Products){ %>
+                <div class="bg-white rounded shadow-md">
+                    <img src="<%=sub.profilepic%>" alt="" class="w-full h-48 sm:h-56 object-cover" />
+
+                    <div class="px-10 py-6 mb-10 text-center">
+                        <div class="text-2xl font-bold text-purple-500 mb-4">
+                            <%= sub.p_name %>
+                        </div>
+                        <span class="text-sm">
+                                <%= sub.p_description %>
+                            </span>
+                        <br>
+                        <span class="text-sm"><%= sub.size %></span>
+                        <br>
+                        <span class="text-sm"><%= sub.price %></span>
+                        <!-- <br>
+                        <span class="text-sm"></span> -->
+                        <!-- <br>
+                            <span class="text-sm"></span> -->
+                    </div>
+                    <button onclick="window.location.href='userdash/appointment/' + '<%= sub.d_Id %>'" class="w-full text-lg h-16 text-white font-extrabold bg-purple-700 hover:bg-purple-900">Take Appointment</button>
+                </div>
+                <% } %>
+        </div>
+        </main>
+
+        <!-- Page Features -->
+
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
+    <script src="../assets/Index/js/toastr.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script>
+        var cont = 0;
+
+        function loopSlider() {
+            var xx = setInterval(function() {
+                switch (cont) {
+                    case 0:
+                        {
+                            $("#slider-1").fadeOut(400);
+                            $("#slider-2").delay(400).fadeIn(400);
+                            $("#sButton1").removeClass("bg-purple-800");
+                            $("#sButton2").addClass("bg-purple-800");
+                            cont = 1;
+
+                            break;
+                        }
+                    case 1:
+                        {
+
+                            $("#slider-2").fadeOut(400);
+                            $("#slider-1").delay(400).fadeIn(400);
+                            $("#sButton2").removeClass("bg-purple-800");
+                            $("#sButton1").addClass("bg-purple-800");
+
+                            cont = 0;
+
+                            break;
+                        }
+
+
+                }
+            }, 8000);
+
+        }
+
+        function reinitLoop(time) {
+            clearInterval(xx);
+            setTimeout(loopSlider(), time);
+        }
+
+
+
+        function sliderButton1() {
+
+            $("#slider-2").fadeOut(400);
+            $("#slider-1").delay(400).fadeIn(400);
+            $("#sButton2").removeClass("bg-purple-800");
+            $("#sButton1").addClass("bg-purple-800");
+            reinitLoop(4000);
+            cont = 0
+
+        }
+
+        function sliderButton2() {
+            $("#slider-1").fadeOut(400);
+            $("#slider-2").delay(400).fadeIn(400);
+            $("#sButton1").removeClass("bg-purple-800");
+            $("#sButton2").addClass("bg-purple-800");
+            reinitLoop(4000);
+            cont = 1
+
+        }
+
+        $(window).ready(function() {
+            $("#slider-2").hide();
+            $("#sButton1").addClass("bg-purple-800");
+            loopSlider();
+        });
+    </script>
+    <script>
+        $("#navbar").load("../userdash/navbar");
+    </script>
+
+
+    <!-- <script type="text/javascript" src="Navbar.js"></script> -->
+
+</body>
+
+</html>
