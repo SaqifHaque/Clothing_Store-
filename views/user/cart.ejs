@@ -36,28 +36,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="hidden pb-4 md:table-cell">
-                                <a href="#">
+                        <% for(const sub of carts){ %>
+                            <tr>
+                                <td class="hidden pb-4 md:table-cell">
                                     <img src="https://limg.app/i/Calm-Cormorant-Catholic-Pinball-Blaster-yM4oub.jpeg" class="w-20 rounded" alt="Thumbnail">
-                                </a>
-                            </td>
-                            <td>
-                                <a href="#">
-                                    <p class="mb-2 md:ml-4">Earphone</p>
+                                    </a>
+                                </td>
+                                <td>
+                                    <p class="mb-2 md:ml-4">
+                                        <%= sub.p_name %>
+                                    </p>
                                     <form action="" method="POST">
                                         <button type="submit" class="text-gray-700 md:ml-4">
                       <small>(Remove item)</small>
                     </button>
                                     </form>
-                                </a>
-                            </td>
-                            <td class="hidden text-right md:table-cell">
-                                <span class="text-sm lg:text-base font-medium">
-                  10.00€
+                                    </a>
+                                </td>
+                                <td class="hidden text-right md:table-cell">
+                                    <span class="text-sm lg:text-base font-medium">
+                                        <%= sub.price %>
                 </span>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                            <% } %>
                     </tbody>
                 </table>
                 <hr class="pb-6 mt-6">
@@ -82,7 +84,7 @@
                                     Subtotal
                                 </div>
                                 <div class="lg:px-4 lg:py-2 m-2 lg:text-lg font-bold text-center text-gray-900">
-                                    148,827.53€
+                                    <%= sum %>
                                 </div>
                             </div>
 
@@ -92,7 +94,7 @@
                                     Tax
                                 </div>
                                 <div class="lg:px-4 lg:py-2 m-2 lg:text-lg font-bold text-center text-gray-900">
-                                    2,976.55€
+                                    <%= tax %>
                                 </div>
                             </div>
                             <div class="flex justify-between pt-4 border-b">
@@ -100,7 +102,7 @@
                                     Total
                                 </div>
                                 <div class="lg:px-4 lg:py-2 m-2 lg:text-lg font-bold text-center text-gray-900">
-                                    17,859.3€
+                                    <%= total %>
                                 </div>
                             </div>
                             <button class="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none">

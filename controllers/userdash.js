@@ -1,5 +1,6 @@
 const express = require('express');
 const userModel = require.main.require('./models/crud-model');
+const cartModel = require.main.require('./models/cart-model');
 const productModel = require.main.require('./models/product-model');
 const noticeModel = require.main.require('./models/notice-model');
 const router = express.Router();
@@ -49,8 +50,21 @@ router.get('/search/:str', (req, res) => {
 
 })
 router.get('/cart', (req, res) => {
-    res.render('user/cart');
+    var sum = 0;
+    cartModel.getProducts(req.cookies["Id"], function(results) {
+        for (var sub of results) {
+            sum += parseInt(sub.price);
+            res.render('user/cart', { carts: results, sum: sum, total: (sum - (sum * 1.5)), tax: (sum * 1.5) });
+        }
+    })
 })
+router.post('/add/:id', (req, res) => {
+    cartModel.getProducts(req.params.id, function(results) {
+        res.render('user/search', { Products: result });
+    })
+})
+
+
 
 
 module.exports = router;
