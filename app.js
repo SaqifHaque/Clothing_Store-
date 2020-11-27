@@ -7,6 +7,7 @@ const login = require('./controllers/login');
 const registration = require('./controllers/registration');
 const logout = require('./controllers/logout');
 const userdash = require('./controllers/userdash');
+const admin = require('./controllers/admin');
 const app = express();
 
 //config
@@ -22,6 +23,7 @@ app.use('/login', login);
 app.use('/registration', registration);
 app.use('/logout', logout);
 app.use('/userdash', userdash);
+app.use('/admin', admin);
 
 //route
 app.get('/', (req, res) => {
