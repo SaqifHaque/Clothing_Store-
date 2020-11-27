@@ -82,9 +82,11 @@
                         <!-- <br>
                             <span class="text-sm"></span> -->
                     </div>
-                    <form method="POST" action="userdash/add/<%= sub.p_Id %>">
-                        <button class="w-full text-lg h-16 text-white font-extrabold bg-purple-700 hover:bg-purple-900">Add to Cart</button>
-                    </form>
+                    <% if(cred){ %>
+                        <form method="POST" action="userdash/add/<%= sub.p_Id %>">
+                            <button class="w-full text-lg h-16 text-white font-extrabold bg-purple-700 hover:bg-purple-900">Add to Cart</button>
+                        </form>
+                        <% } %>
                 </div>
                 <% } %>
         </div>

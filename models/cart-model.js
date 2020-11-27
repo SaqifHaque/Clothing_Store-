@@ -16,4 +16,11 @@ module.exports = {
             callback(status);
         });
     },
+    purchase: function(order, callback) {
+        var sql = "insert into carts VALUES ('', '" + id1 + "' , '" + id2 + "')";
+
+        db.execute(sql, function(status) {
+            callback(status);
+        });
+    },
 }

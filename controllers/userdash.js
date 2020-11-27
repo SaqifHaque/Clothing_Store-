@@ -11,7 +11,7 @@ var msg = "";
 router.get('/', (req, res) => {
 
     productModel.getProducts(function(results) {
-        res.render('user/userdash', { Products: results });
+        res.render('user/userdash', { Products: results, cred: req.cookies["cred"] });
     })
 })
 router.get('/notice', (req, res) => {
@@ -36,7 +36,7 @@ router.get('/showproduct/:str', (req, res) => {
 
     productModel.getProductByCategory(req.params.str, function(results) {
         console.log(results);
-        res.render('user/showproduct', { Products: results });
+        res.render('user/showproduct', { Products: results, cred: req.cookies["cred"] });
     })
 
 })
@@ -45,16 +45,18 @@ router.get('/search/:str', (req, res) => {
     productModel.getProducts(function(results) {
         console.log(results);
         var result = results.filter(obj => obj.p_name.toLowerCase().includes(req.params.str.toLowerCase()));
-        res.render('user/search', { Products: result });
+        res.render('user/search', { Products: result, cred: req.cookies["cred"] });
     })
 
 })
 router.get('/cart', (req, res) => {
     var sum = 0;
     cartModel.getCart(req.cookies["Id"], function(results) {
-        for (var sub of results) {
-            sum += parseInt(sub.price);
-            res.render('user/cart', { carts: results, sum: sum, total: (sum - (sum * 1.5)), tax: (sum * 1.5) });
+        for (var i = 0; i < results.length; i++) {
+            sum += parseInt(results[i].price);
+            if (i == results.length - 1) {
+                res.render('user/cart', { carts: results, sum: sum, total: (sum + (sum * .15)), tax: (sum * .15) });
+            }
         }
     })
 })
@@ -67,6 +69,11 @@ router.post('/add/:id', (req, res) => {
         }
     })
 })
+router.post('/purchase', (req, res) => {
+
+})
+
+
 
 
 
