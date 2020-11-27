@@ -69,8 +69,56 @@ router.post('/add/:id', (req, res) => {
         }
     })
 })
-router.post('/purchase', (req, res) => {
+router.post('/purchase/:str', (req, res) => {
 
+    cartModel.getCart(req.cookies["Id"], function(results) {
+        var products = "";
+        for (var i = 0; i < results.length; i++) {
+            products += results[i].p_name + "-";
+        }
+        const order = {
+            products: products,
+            total: req.params.str.toString(),
+            u_Id: req.cookies["Id"]
+        }
+        cartModel.purchase(order, function(status) {
+            if (status) {
+                var curday = function(sp) {
+                    today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1;
+                    var yyyy = today.getFullYear();
+
+                    if (dd < 10) dd = '0' + dd;
+                    if (mm < 10) mm = '0' + mm;
+                    return (mm + sp + dd + sp + yyyy);
+                };
+                const inv = {
+                    products: products,
+                    total: req.params.str.toString(),
+                    card: req.body.card,
+                    date: curday('/'),
+                    u_Id: req.cookies["Id"]
+                }
+                cartModel.invoice(inv, function(status) {
+                    if (status) {
+                        res.redirect('/invoice');
+                    } else {
+                        console.log("Server Error");
+                    }
+                })
+            } else {
+                console.log("Server Error");
+            }
+        })
+    })
+})
+router.get('/invoice', (req, res) => {
+    cartModel.getInvoice(req.cookies["Id"], function(results) {
+
+        res.render("user/invoice", { invoices: results });
+
+    })
 })
 
 
