@@ -51,7 +51,7 @@ router.get('/search/:str', (req, res) => {
 })
 router.get('/cart', (req, res) => {
     var sum = 0;
-    cartModel.getProducts(req.cookies["Id"], function(results) {
+    cartModel.getCart(req.cookies["Id"], function(results) {
         for (var sub of results) {
             sum += parseInt(sub.price);
             res.render('user/cart', { carts: results, sum: sum, total: (sum - (sum * 1.5)), tax: (sum * 1.5) });
@@ -59,8 +59,12 @@ router.get('/cart', (req, res) => {
     })
 })
 router.post('/add/:id', (req, res) => {
-    cartModel.getProducts(req.params.id, function(results) {
-        res.render('user/search', { Products: result });
+    cartModel.addCart(req.params.id, req.cookies["Id"], function(status) {
+        if (status) {
+            res.redirect('../cart');
+        } else {
+            console.log("Server Error");
+        }
     })
 })
 
