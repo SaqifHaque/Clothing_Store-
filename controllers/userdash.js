@@ -120,6 +120,14 @@ router.get('/invoice', (req, res) => {
 
     })
 })
+router.post('/deletecart/:id', (req, res) => {
+    cartModel.deleteCart(req.params.id, function(status) {
+        if (status) {
+            res.redirect("userdash/cart");
+        }
+
+    })
+})
 
 
 

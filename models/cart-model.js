@@ -37,4 +37,11 @@ module.exports = {
         });
 
     },
+    deleteCart: function(id, callback) {
+        var sql = "delete from carts where cart_Id= '" + id + "'";;
+        db.execute(sql, function(status) {
+            callback(status);
+        });
+
+    },
 }
