@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Better Call Doc</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="assets/Home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="assets/Home/css/heroic-features.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../../assets/Index/js/toastr.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+        <main class="px-3">
+            <div class="text-4xl sm:text-5xl text-center my-10">Search Results</div>
+
+            <div class="grid md:grid-cols-3 gap-8 m-5 max-w-5xl m-auto">
+                <div class="bg-white">
+                    <img src="<%=sub.profilepic%>" alt="" class="w-full h-48 sm:h-56 object-cover" />
+
+                    <div class="px-10 py-6 mb-10 text-center">
+                        <div class="text-2xl font-bold text-purple-500 mb-4">
+                            <%= sub.username %>
+                        </div>
+                        <span class="text-sm">
+                                <%= sub.specialization %>
+                    
+                            </span>
+                        <br>
+                        <span class="text-sm"><%= sub.email %></span>
+                        <br>
+                        <span class="text-sm"><%= sub.qualification %></span>
+                        <br>
+                        <span class="text-sm"><%= sub.availability  %></span>
+                        <!-- <br>
+                            <span class="text-sm"><%= sub.email %></span> -->
+                    </div>
+                    <button onclick="window.location.href='../appointment/' + '<%= sub.d_Id %>'" class="w-full text-lg h-16 text-white font-extrabold bg-purple-500">See Products</button>
+                </div>
+                <div class="bg-white">
+                    <img src="<%= sub.profilepic %>" alt="" class="w-full h-48 sm:h-56 object-cover" />
+                    <div class="px-10 py-6 mb-10 text-center">
+                        <div class="text-2xl font-bold text-purple-500 mb-4">
+                            Male
+                        </div>
+                        <span class="text-sm">
+                                <%= sub.specialization %>
+                    
+                            </span>
+                        <br>
+                        <span class="text-sm"><%= sub.email %></span>
+                        <br>
+                        <span class="text-sm"><%= sub.qualification %></span>
+                        <br>
+                        <span class="text-sm"><%= sub.availability  %></span>
+                        <!-- <br>
+                            <span class="text-sm"><%= sub.email %></span> -->
+                    </div>
+                    <button onclick="window.location.href='../appointment/' + '<%= sub.d_Id %>'" class="w-full text-lg h-16 text-white font-extrabold bg-purple-500">Take Appointment</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Page Features -->
+
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
+    <script src="../../assets/Index/js/toastr.min.js"></script>
+    <script>
+        $("#navbar").load("../navbar");
+    </script>
+
+
+    <!-- <script type="text/javascript" src="Navbar.js"></script> -->
+
+</body>
+
+</html>

@@ -31,4 +31,22 @@ router.get('/navbar', (req, res) => {
     res.render('shared/navbar', { name: req.cookies["uname"] });
 
 })
+router.get('/showproduct/:str', (req, res) => {
+
+    productModel.getProductByCategory(req.params.str, function(results) {
+        console.log(results);
+        res.render('user/showproduct', { Products: results });
+    })
+
+})
+router.get('/search/:str', (req, res) => {
+
+    productModel.getProducts(function(results) {
+        console.log(results);
+        var result = results.filter(obj => obj.p_name.toLowerCase().includes(req.params.str.toLowerCase()));
+        res.render('user/search', { Products: result });
+    })
+
+})
+
 module.exports = router;

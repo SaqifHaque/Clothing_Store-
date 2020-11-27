@@ -2,8 +2,8 @@ const db = require('./db');
 
 module.exports = {
 
-    getProductId: function(id, callback) {
-        var sql = "select * from products where id= '" + id + "'";
+    getProductByCategory: function(str, callback) {
+        var sql = "select * from products JOIN category on products.c_Id = category.c_Id where category.c_name= '" + str + "'";
         db.getResults(sql, function(results) {
             callback(results);
         });
