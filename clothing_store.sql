@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2020 at 06:41 PM
+-- Generation Time: Nov 29, 2020 at 02:12 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -39,10 +39,10 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`cart_Id`, `p_Id`, `u_Id`) VALUES
-(2, 3, 0),
-(3, 6, 0),
-(4, 1, 1),
-(5, 3, 1);
+(11, 3, 1),
+(12, 2, 1),
+(13, 3, 1),
+(16, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -81,6 +81,13 @@ CREATE TABLE `invoice` (
   `u_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`inv_Id`, `products`, `total`, `card`, `date`, `u_Id`) VALUES
+(8, 'Addidas Pant-Addidas Pant-', '1150', 'UCB', '11/29/2020', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -112,8 +119,18 @@ CREATE TABLE `orders` (
   `o_Id` int(5) NOT NULL,
   `products` varchar(100) NOT NULL,
   `total` varchar(100) NOT NULL,
+  `ostatus` varchar(50) NOT NULL,
   `u_Id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`o_Id`, `products`, `total`, `ostatus`, `u_Id`) VALUES
+(2, 'Puma Pants-Jamdani Shari -Puma Pants-', '2300', 'Cancelled', 1),
+(3, 'Puma Pants-Jamdani Shari -Puma Pants-', '2300', 'Accepted', 1),
+(14, 'Addidas Pant-Addidas Pant-', '1150', 'Pending', 3);
 
 -- --------------------------------------------------------
 
@@ -140,10 +157,10 @@ INSERT INTO `products` (`p_Id`, `p_name`, `price`, `size`, `p_description`, `p_i
 (2, 'Jamdani Shari ', '1000', 'S,M,XL', 'Very silky shari', '', 4),
 (3, 'Puma Pants', '500', 'S,M,XL', 'Comfy Pants', '', 2),
 (4, 'Silk Shari Premium ', '2000', 'S,M,XL', 'Premium Shari', '', 4),
-(5, 'Gucci Shirt', '1500', 'S,M,XL', 'Comfy shirt', '', 1),
 (6, 'Raymond Shirt', '1800', 'S,M,XL', 'Premium Formal Shirt', '', 1),
 (7, 'Pakistani Salwar', '800', 'S,M,XL', 'Beautiful Salwar', '', 3),
-(8, 'Indian Salwar', '1000', 'S,M,XL', 'Beautiful and luxurious salwar', '', 3);
+(8, 'Indian Salwar', '1000', 'S,M,XL', 'Beautiful and luxurious salwar', '', 3),
+(12, 'Gucchi Shirt', '1500', 'S,M,XL', 'Very Premium', '', 1);
 
 -- --------------------------------------------------------
 
@@ -169,7 +186,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `bloodgroup`, `phonenumber`, `password`, `profilepic`, `type`, `status`, `gender`) VALUES
-(1, 'Saqif', 'saqifhaque@gmail.com', 'B+', '01845435118', 'MTIzNA==', '', 'User', 'Verified', 'Male');
+(2, 'Admin', 'admin@store.com', 'B-', '01845435118', 'MTIzNA==', '', 'Admin', 'Verified', 'Male'),
+(3, 'Saqifa', 'saqifhaque@gmail.com', 'B+', '01845435118', 'MTIzNA==', '', 'User', 'Verified', 'Male'),
+(11, 'saqif', 'saqifhaque@yahoo.com', 'B+', '+880-1845435118', 'MTIzNA==', 'https://i1.pngguru.com/preview/137/834/449/cartoon-cartoon-character-avatar-drawing-film-ecommerce-f', 'Patient', 'Unverified', 'on');
 
 --
 -- Indexes for dumped tables
@@ -179,7 +198,8 @@ INSERT INTO `users` (`id`, `username`, `email`, `bloodgroup`, `phonenumber`, `pa
 -- Indexes for table `carts`
 --
 ALTER TABLE `carts`
-  ADD PRIMARY KEY (`cart_Id`);
+  ADD PRIMARY KEY (`cart_Id`),
+  ADD KEY `p_Id` (`p_Id`);
 
 --
 -- Indexes for table `category`
@@ -209,8 +229,7 @@ ALTER TABLE `orders`
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`p_Id`),
-  ADD KEY `products_ibfk_1` (`c_Id`);
+  ADD PRIMARY KEY (`p_Id`);
 
 --
 -- Indexes for table `users`
@@ -226,7 +245,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_Id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cart_Id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -238,7 +257,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `inv_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `inv_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `notices`
@@ -250,29 +269,29 @@ ALTER TABLE `notices`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `o_Id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `o_Id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `p_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `p_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `products`
+-- Constraints for table `carts`
 --
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`c_Id`) REFERENCES `category` (`c_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `carts`
+  ADD CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`p_Id`) REFERENCES `products` (`p_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,0 +1,1 @@
+Since the mailgun is turned off the pincode will be showed in console otherwise the user will be Unverified and wont be able to logged in.
