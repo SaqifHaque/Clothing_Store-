@@ -24,9 +24,7 @@
 <body>
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     </nav>
-    <form method="POST" action="">
-        <button type="submit">Add Users</button>
-    </form>
+    <a href="http://localhost:2025/admin/adduser" class="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 hover:bg-gray-700">Add Users</a>
 
     <table class="border-collapse w-full">
         <thead>
@@ -49,7 +47,7 @@
                     </td>
                     <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                         <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Total</span>
-                        <form method="POST" action="">
+                        <form method="POST" action="http://localhost:2025/admin/delete/<%= user.id %>">
                             <button type="submit">Delete</button>
                         </form>
                     </td>
@@ -61,7 +59,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
     <script src="../assets/Index/js/toastr.min.js"></script>
     <script>
-        $("#navbar").load("../userdash/navbar");
+        $("#navbar").load("navbar");
     </script>
 
 

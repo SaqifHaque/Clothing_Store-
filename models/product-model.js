@@ -10,34 +10,44 @@ module.exports = {
 
     },
     getProducts: function(callback) {
-        var sql = "select * from products";
+        var sql = "select * from products join category on products.c_Id = category.c_Id";
         db.getResults(sql, function(results) {
             callback(results);
         });
 
     },
-    insert: function(user, callback) {
-        var pic = "https://i1.pngguru.com/preview/137/834/449/cartoon-cartoon-character-avatar-drawing-film-ecommerce-facial-expression-png-clipart.jpg";
-        var sql = "insert into users VALUES ('', '" + user.username + "' , '" + user.email + "' ,'" + user.bloodgroup + "', '" + user.phone + "','" + user.password + "', '" + pic + "' ,'" + user.type + "' , '" + user.status + "','" + user.gender + "')";
-
-        db.execute(sql, function(status) {
-            callback(status);
+    getCategories: function(callback) {
+        var sql = "select * from category";
+        db.getResults(sql, function(results) {
+            callback(results);
         });
+
     },
-    update: function(user, callback) {
-        // var sql = "update user set username = '" + user.username + "',password='" + user.password + "' , type='" + user.type + "' where id='" + user.id + "'";
-
-        //console.log(sql);
+    update: function(status, id, callback) {
+        var sql = "update orders set ostatus = '" + status + "' where o_Id='" + id + "'";
 
         db.execute(sql, function(status) {
             callback(status);
         });
 
+    },
+
+    getOrders: function(callback) {
+        var sql = "select * from orders join users on orders.u_Id = users.id";
+        db.getResults(sql, function(results) {
+            callback(results);
+        });
+
+    },
+    insert: function(product, callback) {
+        var sql = "insert into products VALUES ('', '" + product.p_name + "' , '" + product.price + "' ,'" + product.size + "', '" + product.p_description + "', '" + product.p_image + "', '" + product.c_Id + "')";
+
+        db.execute(sql, function(status) {
+            callback(status);
+        });
     },
     delete: function(id, callback) {
-        // var sql = "delete from user where id = '" + id + "'";
-
-        //console.log(sql);
+        var sql = "delete from products where p_Id = '" + id + "'";
 
         db.execute(sql, function(status) {
             callback(status);

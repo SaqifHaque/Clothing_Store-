@@ -20,7 +20,7 @@ module.exports = {
 
     },
     getAll: function(callback) {
-        // var sql = "select * from user";
+        var sql = "select * from users";
         db.getResults(sql, function(results) {
             callback(results);
         });
@@ -45,10 +45,7 @@ module.exports = {
 
     },
     delete: function(id, callback) {
-        // var sql = "delete from user where id = '" + id + "'";
-
-        //console.log(sql);
-
+        var sql = "delete from users where id = '" + id + "'";
         db.execute(sql, function(status) {
             callback(status);
         });

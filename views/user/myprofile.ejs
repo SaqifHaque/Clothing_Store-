@@ -79,50 +79,56 @@
     <!-- Bootstrap core JavaScript -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
     <script src="../assets/Index/js/toastr.min.js"></script>
+    <% if(user[0].type == "User"){%>
+        <script>
+            $("#navbar").load("../userdash/navbar");
+        </script>
+        <% } else { %>
+            <script>
+                $("#navbar").load("../admin/navbar");
+            </script>
+            <% } %>
 
-    <script>
-        $("#navbar").load("../userdash/navbar");
-    </script>
-    <script>
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-        $('#btn').on('click', function() {
+                <script>
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    $('#btn').on('click', function() {
 
-            let name = document.getElementById("name").value;
-            let pass = document.getElementById("pass").value;
-            if (name == "") {
-                toastr["error"]("Name Field Can be Empty")
-            }
-            if (pass == "") {
-                toastr["error"]("Password Field Can be Empty")
-            }
-        })
-        $('#up').on('click', function() {
-            let fname = document.getElementById("upload").files.length;
-            if (fname == 0) {
-                toastr["error"]("You haven't chosen any pic")
-            }
+                        let name = document.getElementById("name").value;
+                        let pass = document.getElementById("pass").value;
+                        if (name == "") {
+                            toastr["error"]("Name Field Can be Empty")
+                        }
+                        if (pass == "") {
+                            toastr["error"]("Password Field Can be Empty")
+                        }
+                    })
+                    $('#up').on('click', function() {
+                        let fname = document.getElementById("upload").files.length;
+                        if (fname == 0) {
+                            toastr["error"]("You haven't chosen any pic")
+                        }
 
-        })
-    </script>
+                    })
+                </script>
 
 
-    <!-- <script type="text/javascript" src="Navbar.js"></script> -->
+                <!-- <script type="text/javascript" src="Navbar.js"></script> -->
 
 </body>
 

@@ -50,15 +50,24 @@ router.get('/search/:str', (req, res) => {
 
 })
 router.get('/cart', (req, res) => {
-    var sum = 0;
-    cartModel.getCart(req.cookies["Id"], function(results) {
-        for (var i = 0; i < results.length; i++) {
-            sum += parseInt(results[i].price);
-            if (i == results.length - 1) {
-                res.render('user/cart', { carts: results, sum: sum, total: (sum + (sum * .15)), tax: (sum * .15) });
+    if (req.cookies["cred"]) {
+        var sum = 0;
+        cartModel.getCart(req.cookies["Id"], function(results) {
+            console.log(results);
+            if (results.length == 0) {
+                res.render('user/cart', { carts: [], sum: 0, total: 0, tax: 0 });
+            } else {
+                for (var i = 0; i < results.length; i++) {
+                    sum += parseInt(results[i].price);
+                    if (i == results.length - 1) {
+                        res.render('user/cart', { carts: results, sum: sum, total: (sum + (sum * .15)), tax: (sum * .15) });
+                    }
+                }
             }
-        }
-    })
+        })
+    } else {
+        res.status(400);
+    }
 })
 router.post('/add/:id', (req, res) => {
     cartModel.addCart(req.params.id, req.cookies["Id"], function(status) {
@@ -79,6 +88,7 @@ router.post('/purchase/:str', (req, res) => {
         const order = {
             products: products,
             total: req.params.str.toString(),
+            status: "Pending",
             u_Id: req.cookies["Id"]
         }
         cartModel.purchase(order, function(status) {
@@ -93,6 +103,7 @@ router.post('/purchase/:str', (req, res) => {
                     if (mm < 10) mm = '0' + mm;
                     return (mm + sp + dd + sp + yyyy);
                 };
+                console.log(products);
                 const inv = {
                     products: products,
                     total: req.params.str.toString(),
@@ -102,7 +113,7 @@ router.post('/purchase/:str', (req, res) => {
                 }
                 cartModel.invoice(inv, function(status) {
                     if (status) {
-                        res.redirect('/invoice');
+                        res.redirect('../invoice');
                     } else {
                         console.log("Server Error");
                     }
@@ -123,15 +134,107 @@ router.get('/invoice', (req, res) => {
 router.post('/deletecart/:id', (req, res) => {
     cartModel.deleteCart(req.params.id, function(status) {
         if (status) {
-            res.redirect("userdash/cart");
+            res.redirect("../cart");
         }
 
     })
 })
+router.get('/myprofile', (req, res) => {
+    if (req.cookies["cred"] != null) {
+        userModel.getById(req.cookies["Id"], function(result) {
+            var c = Buffer.from(result[0].password, 'base64');
+            const str = c.toString('utf-8');
+            result[0].password = str.toString('ascii');
 
+            res.render('user/myprofile', { user: result, msg: "" });
+        })
+    } else {
+        res.redirect('/login');
+    }
 
+})
+router.post('/myprofile', [
+    check('username', 'Invalid UserName').exists().isLength({ min: 3 }),
+    check('password', 'Invalid Password').exists().isLength({ min: 3 })
 
+], (req, res) => {
+    if (req.cookies["cred"] != null) {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            console.log("validation failed");
+            const alert = errors.array();
+            alert.forEach(myFunction);
 
+            function myFunction(item) {
+                console.log(item);
+            }
+        } else {
+            var user = {
+                username: req.body.username,
+                password: Buffer.from(req.body.password).toString('base64'),
+                id: req.cookies["Id"]
+            }
+            console.log(user);
+            userModel.myProfileUpdate(user, function(status) {
+                if (status) {
+                    res.redirect('myprofile');
+                }
+            })
+        }
+    } else {
+        res.redirect('/login');
+    }
 
+})
+router.post('/picupload', [
+    check('dp', 'Invalid Profile Pic').custom((val, { req }) => {
+        if (req.files.dp.mimetype === 'image/jpeg') {
+            return true;
+        } else {
+            return false;
+        }
+    })
+], (req, res) => {
+    if (req.cookies["cred"] != null) {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            console.log("validation failed");
+            const alert = errors.array();
+            alert.forEach(myFunction);
 
+            function myFunction(item) {
+                console.log(item);
+            }
+        } else {
+
+            let fileName = req.files.dp;
+            let uploadPath = 'assets/uploads/' + fileName.name;
+            var user = {
+                userid: req.cookies["Id"],
+                uploadPath: uploadPath
+            };
+            userModel.uploadPicture(user, function(status) {
+                if (status) {
+                    fileName.mv(uploadPath, (err) => {
+                        if (err) {
+                            return res.status(500).send(err);
+                        }
+
+                    });
+                    res.redirect('myprofile');
+                } else {
+                    console.log("can not upload");
+                }
+            });
+        }
+    } else {
+        res.redirect('/login');
+    }
+});
+
+router.get('/contact', (req, res) => {
+
+    res.render('user/contact');
+
+})
 module.exports = router;

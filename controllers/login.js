@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
                 res.cookie('email', results[0].email);
                 if (results[0].status != "Unverified") {
                     if (results[0].type == "Admin") {
-                        res.redirect('/admindash');
+                        res.redirect('/admin');
                     } else if (results[0].type == "User") {
                         res.redirect('/userdash');
                     }

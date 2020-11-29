@@ -3,7 +3,7 @@ const db = require('./db');
 module.exports = {
 
     getCart: function(id, callback) {
-        var sql = "select * from carts JOIN products on carts.cart_Id = products.p_Id where carts.u_Id= '" + id + "'";;
+        var sql = "select * from carts JOIN products on carts.p_Id = products.p_Id where carts.u_Id= '" + id + "'";
         db.getResults(sql, function(results) {
             callback(results);
         });
@@ -17,14 +17,14 @@ module.exports = {
         });
     },
     purchase: function(order, callback) {
-        var sql = "insert into orders VALUES ('', '" + order.products + "' , '" + order.total + "', '" + order.u_Id + "')";
+        var sql = "insert into orders VALUES ('', '" + order.products + "' , '" + order.total + "', '" + order.status + "', '" + order.u_Id + "')";
 
         db.execute(sql, function(status) {
             callback(status);
         });
     },
     invoice: function(inv, callback) {
-        var sql = "insert into invoice VALUES ('', '" + inv.products + "' , '" + inv.total + "', '" + inv.card + "', '" + inv.date + "')";
+        var sql = "insert into invoice VALUES ('', '" + inv.products + "' , '" + inv.total + "', '" + inv.card + "', '" + inv.date + "', '" + inv.u_Id + "')";
 
         db.execute(sql, function(status) {
             callback(status);
@@ -38,7 +38,7 @@ module.exports = {
 
     },
     deleteCart: function(id, callback) {
-        var sql = "delete from carts where cart_Id= '" + id + "'";;
+        var sql = "delete from carts where cart_Id= '" + id + "'";
         db.execute(sql, function(status) {
             callback(status);
         });
