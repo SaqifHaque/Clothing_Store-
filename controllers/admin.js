@@ -109,7 +109,7 @@ router.post('/adduser', [check('username', 'Invalid Username')
                 phone: req.body.phone,
                 password: Buffer.from(req.body.password).toString('base64'),
                 profilepic: "...",
-                type: "Patient",
+                type: "User",
                 status: "Verified",
                 gender: req.body.gender
             };
