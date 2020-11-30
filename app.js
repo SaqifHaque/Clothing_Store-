@@ -8,6 +8,7 @@ const registration = require('./controllers/registration');
 const logout = require('./controllers/logout');
 const userdash = require('./controllers/userdash');
 const admin = require('./controllers/admin');
+const pincode = require('./controllers/pincode');
 const app = express();
 
 //config
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 app.use('/login', login);
 app.use('/registration', registration);
+app.use('/pincode', pincode);
 app.use('/logout', logout);
 app.use('/userdash', userdash);
 app.use('/admin', admin);

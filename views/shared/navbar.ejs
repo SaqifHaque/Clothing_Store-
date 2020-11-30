@@ -107,6 +107,8 @@
         </div>
 </nav>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     $('#search').keydown(function(event) {
         if (event.keyCode == 13) {
@@ -150,4 +152,48 @@
             }
         });
     })
+</script>
+<script>
+    $("#search").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "/userdash/autosearch",
+                type: "GET",
+                data: request, // request is the value of search input
+                success: function(data) {
+                    alert(data);
+                    // Map response values to fiedl label and value
+                    response($.map(data, function(el) {
+                        return {
+                            label: el.p_name,
+                        };
+                    }));
+                }
+            });
+        },
+
+        // The minimum number of characters a user must type before a search is performed.
+        minLength: 1,
+
+        // set an onFocus event to show the result on input field when result is focused
+        focus: function(event, ui) {
+            this.value = ui.item.label;
+            // Prevent other event from not being execute
+            event.preventDefault();
+        },
+        select: function(event, ui) {
+            // Prevent value from being put in the input:
+            this.value = ui.item.label;
+            // Set the id to the next input hidden field
+            $(this).next("input").val(ui.item.value);
+            // Prevent other event from not being execute            
+            event.preventDefault();
+            // optionnal: submit the form after field has been filled up
+            $('#search').keydown(function(event) {
+                if (event.keyCode == 13) {
+                    window.location.href = '../../userdash/search/' + document.getElementById("search").value;
+                }
+            });
+        }
+    });
 </script>

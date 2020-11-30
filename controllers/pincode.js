@@ -1,8 +1,8 @@
 const express = require('express');
 const userModel = require.main.require('./models/crud-model');
 const router = express.Router();
-const mailgun = require("mailgun-js");
-const mg = mailgun({ apiKey: process.env.MAILGUN_APIKEY, domain: process.env.DOMAIN });
+// const mailgun = require("mailgun-js");
+// const mg = mailgun({ apiKey: process.env.MAILGUN_APIKEY, domain: process.env.DOMAIN });
 var session = require('express-session');
 
 router.get('/', (req, res) => {

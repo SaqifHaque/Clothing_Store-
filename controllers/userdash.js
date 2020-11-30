@@ -237,4 +237,11 @@ router.get('/contact', (req, res) => {
     res.render('user/contact');
 
 })
+router.get('/autosearch', (req, res) => {
+    productModel.getProducts(function(results) {
+        console.log(results);
+        res.send(JSON.stringify(results));
+    })
+
+})
 module.exports = router;
